@@ -16,6 +16,13 @@ exports.handler = async (event, context, callback) => { // don't have to use all
         }
     }
 
+    // get the query string parameters as string
+    if (event.queryStringParameters !== null && event.queryStringParameters !== undefined) {
+        for(let i = 0; i < Object.keys(event.queryStringParameters).length; i++) {
+            console.log(Object.keys(event.queryStringParameters)[i], "=", Object.values(event.queryStringParameters)[i])
+        }
+    }
+
     switch (route) {
 
         case 'database':
@@ -27,7 +34,11 @@ exports.handler = async (event, context, callback) => { // don't have to use all
 
             output = "You've hit the /blabla route!";
             break;
-            
+
+        case 'shows':
+
+            output = await getShows();
+            break;
 
         default:
             output = "no endpoint path found :(";
@@ -48,3 +59,25 @@ exports.handler = async (event, context, callback) => { // don't have to use all
     callback(null, responseObj); // end the lambda!
     
 };
+
+
+async function getShows() {
+    const https = require('https');
+
+    return new Promise((resolve, reject) => {
+        https.get('https://now-api4-prod.mediaworks.nz/v4/shows', (res) => {
+            try {
+                let body = '';
+    
+                res.on('data', (chunk) => {
+                    body += chunk;
+                });
+    
+                res.on('end', async () => {
+                    const data = JSON.parse(body);
+                    resolve(data.shows);
+                });
+            } catch (err) { reject(err); }
+        });
+    });
+}

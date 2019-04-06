@@ -1,0 +1,16 @@
+{
+  "name": "mw-livestream",
+  "version": "1.0.0",
+  "description": “XXXX”,
+  "main": "index.js",
+  "dependencies": {
+    "request": "^2.81.0",
+    "aws-sdk": "^2.41.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Andrew - Elevate",
+  "license": "ISC"
+}

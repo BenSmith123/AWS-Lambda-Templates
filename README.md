@@ -1,10 +1,7 @@
-# Local Lambda template
+# AWS Lambda Function Templates
 
-NodeJS (v8) - AWS Lambda template & local testing
-(also has AWS database connection example)
+(Node v8)
 
-**Run:** `node run-local.js`
+Each contain a readme.md with setup/run instructions.
 
-For database example: `npm install aws-sdk`
-
-**Deploy:** .zip the files, must include `node_modules`, don't include the `run-local.js`
+Use the lambda-server.js to run a localhost mock server of AWS CloudFront

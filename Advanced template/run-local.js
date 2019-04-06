@@ -2,13 +2,27 @@
 
 const lambda = require('./index');
 
-// construct the request object passed into the lambda
-// (method, headers, body, parameters, user agent etc.)
 const requestObject = {
+    runLocal: true, // just for local use! - To differ between lambda and running locally
+    pathParameters: {
+        endpoint: 'view_record'
+    },
+    queryStringParameters: {
+        id: "1000",
+        version: "2.0.0",
+        highest_level: "20",
+        device_system: "iOS",
+        device_type: "iPhone X",
+        tester: "true"
+    },
     resource: '/testFunction/{endpoint}',
-    path: '/testFunction/blabla',
+    path: '/testFunction/bla',
     httpMethod: 'GET',
     headers: {
+        // CUSTOM HEADERS
+        'sortBy' : 'ID',
+        'filter' : 'emptyObjects',
+        // standard AWS headers
         accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
         'accept-encoding': 'gzip, deflate, br',
         'accept-language': 'en-US,en;q=0.9',
@@ -18,11 +32,7 @@ const requestObject = {
         'X-Amzn-Trace-Id': 'Root=1-5b7e64cf-ad721fa4bb6a40e42f78d958',
         'X-Forwarded-For': '122.58.128.87',
         'X-Forwarded-Port': '443',
-        'X-Forwarded-Proto': 'https'
-    },
-    queryStringParameters: null,
-    pathParameters: {
-        endpoint: 'records'
+        'X-Forwarded-Proto': 'https',
     },
     stageVariables: null,
     requestContext: {
@@ -58,10 +68,10 @@ const requestObject = {
 
 
 // call the lambda function!
-lambda.handler(requestObject, null, printout); // <-- 'printout' is the callback function that the lambda will end on 
+lambda.handler(requestObject, null, printout);
 
 
 // print the lambda function output!
 function printout (err, data) {
-	console.log (err, data)
+	console.log (err, data.body)
 }
